@@ -1,17 +1,17 @@
 const result = require("../../result")
 const schema = require("../../schema")
 
-const function transformSchemaBuilder<T, S, M>(innerSchema: schema.Schema<T, S, M>)
+const function transformSchemaBuilder<T, S, M>(sourceSchema: schema.Schema<T, S, M>)
 	return function<R>(transformFn: (T) -> R)
-		return schema<<R, schema.Schema<T, S, M>>>("transform", function(value)
-			const innerSchemaParseResult = innerSchema.parse(value)
+		return schema.createSchema<<R, schema.InnerSchema<S, M>>>("transform", function(value)
+			const sourceSchemaParseResult = sourceSchema.parse(value)
 
-			if not innerSchemaParseResult.ok then
-				return innerSchemaParseResult
+			if not sourceSchemaParseResult.ok then
+				return sourceSchemaParseResult
 			end
 
-			return result.parse.ok(transformFn(innerSchemaParseResult.value))
-		end, innerSchema)
+			return result.parse.ok(transformFn(sourceSchemaParseResult.value))
+		end, schema.innerSchema(sourceSchema))
 	end
 end
 

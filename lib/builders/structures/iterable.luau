@@ -1,9 +1,10 @@
 const result = require("../../result")
 const issue = require("../../issue")
 const schema = require("../../schema")
+const shared = require("../../shared")
 
 const function iterableSchemaBuilder<K, KS, KM, T, TS, TM>(keySchema: schema.Schema<K, KS, KM>, valueSchema: schema.Schema<T, TS, TM>)
-	return schema<<{ [K]: T? }, { key: schema.Schema<K, KS, KM>, value: schema.Schema<T, TS, TM> }>>(
+	return schema.createSchema<<{ [K]: T? }, { key: schema.InnerSchema<KS, KM>, value: schema.InnerSchema<TS, TM> }>>(
 		"iterable",
 		function(value)
 			if type(value) ~= "table" then
@@ -42,8 +43,8 @@ const function iterableSchemaBuilder<K, KS, KM, T, TS, TM>(keySchema: schema.Sch
 			return result.parse.ok(value)
 		end,
 		{
-			key = keySchema,
-			value = valueSchema,
+			key = schema.innerSchema(keySchema) :: schema.InnerSchema<KS, KM>,
+			value = schema.innerSchema(valueSchema) :: schema.InnerSchema<TS, TM>,
 		}
 	)
 end

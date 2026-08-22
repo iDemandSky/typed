@@ -7,18 +7,18 @@ type RefineResult<T> = {
 	err: (message: string) -> result.ParseResultErr,
 }
 
-const function refineSchemaBuilder<T, S, M>(innerSchema: schema.Schema<T, S, M>)
+const function refineSchemaBuilder<T, S, M>(sourceSchema: schema.Schema<T, S, M>)
 	return function(refineFn: (value: T, result: RefineResult<T>) -> result.ParseResult<T>)
-		return schema<<T, schema.Schema<T, S, M>>>("refine", function(value)
-			const innerSchemaParseResult = innerSchema.parse(value)
+		return schema.createSchema<<T, schema.InnerSchema<S, M>>>("refine", function(value)
+			const sourceSchemaParseResult = sourceSchema.parse(value)
 
-			if not innerSchemaParseResult.ok then
-				return innerSchemaParseResult
+			if not sourceSchemaParseResult.ok then
+				return sourceSchemaParseResult
 			end
 
-			return refineFn(innerSchemaParseResult.value, {
+			return refineFn(sourceSchemaParseResult.value, {
 				ok = function()
-					return result.parse.ok(innerSchemaParseResult.value)
+					return result.parse.ok(sourceSchemaParseResult.value)
 				end,
 				err = function(message)
 					return result.parse.err({
@@ -26,7 +26,7 @@ const function refineSchemaBuilder<T, S, M>(innerSchema: schema.Schema<T, S, M>)
 					})
 				end,
 			})
-		end, innerSchema)
+		end, schema.innerSchema(sourceSchema))
 	end
 end
 

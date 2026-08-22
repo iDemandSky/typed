@@ -12,6 +12,8 @@ typed.unknown = require("@self/builders/base/unknown")
 typed.never = require("@self/builders/base/never")
 typed.literal = require("@self/builders/base/literal")
 typed.is = require("@self/builders/base/is")
+typed.refine = require("@self/builders/base/refine")
+typed.meta = require("@self/builders/base/meta")
 
 -- builtins
 typed.boolean = builtinSchemaBuilders.boolean
@@ -44,6 +46,8 @@ typed.formatIssue = issue.formatIssue
 export type infer<T> = shared.infer<T>
 
 export type Schema<T, S = nil, M = nil> = schema.Schema<T, S, M>
+
+export type InnerSchema<S = nil, M = nil> = schema.InnerSchema<S, M>
 
 export type UnknownSchema = schema.UnknownSchema
 
