@@ -8,9 +8,8 @@ Everything in `typed` -- `t.string()`, `t.table({ ... })`, `t.union(a, b)`, and 
 export type Schema<T, S = nil, M = nil> = {
     type: SchemaType,
     infer: T,
-   	metadata: M,
     shape: S,
-    meta: <T, S, M, NewM>(self: Schema<T, S, M>, metadata: NewM) -> Schema<T, S, NewM>,
+   	metadata: M,
     validate: (value: any) -> ValidateResult,
     parse: (value: any) -> ParseResult<T>,
     unwrapParse: (value: any) -> T,
