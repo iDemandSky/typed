@@ -19,9 +19,7 @@ const function unionSchema<T0, T0S, T0M, T1, T1S, T1M>(sourceSchemaA: schema.Sch
 				return parseResult1
 			end
 
-			return result.parse.err({
-				issue.parse.invalidUnion("invalid input"),
-			})
+			return result.parse.err(shared.joinArrays(parseResult0.issues, parseResult1.issues))
 		end,
 		{
 			-- luau being funny once again
