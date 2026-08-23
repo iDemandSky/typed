@@ -35,6 +35,7 @@ typed.iterable = require("@self/builders/structures/iterable")
 -- modifiers
 typed.optional = require("@self/builders/modifiers/optional")
 typed.transform = require("@self/builders/modifiers/transform")
+typed.default = require("@self/builders/modifiers/default")
 
 -- combinators
 typed.union = require("@self/builders/combinators/union")
