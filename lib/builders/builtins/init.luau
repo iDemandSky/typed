@@ -20,7 +20,7 @@ builtins.none = builtins["nil"]
 
 builtins.vector = builtinSchemaBuilder<<vector>>("vector")
 
-builtins.buffer = builtinSchemaBuilder<<Buffer>>("buffer")
+builtins.buffer = builtinSchemaBuilder<<buffer>>("buffer")
 
 builtins["function"] = builtinSchemaBuilder<<(...any) -> ...any>>("function")
 builtins.callable = builtins["function"]
