@@ -1,7 +1,6 @@
 const result = require("../../result")
 const issue = require("../../issue")
 const schema = require("../../schema")
-const shared = require("../../shared")
 
 const function iterableSchemaBuilder<K, KS, KM, T, TS, TM>(keySchema: schema.Schema<K, KS, KM>, valueSchema: schema.Schema<T, TS, TM>)
 	return schema.createSchema<<{ [K]: T? }, { key: schema.InnerSchema<KS, KM>, value: schema.InnerSchema<TS, TM> }>>(
