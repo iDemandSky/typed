@@ -14,6 +14,8 @@ t.unknown()
 t.never()
 t.literal("typed")
 t.is<<string>>("string")
+t.refine(t.string())(function() ... end)
+t.meta(t.string(), "hello world")
 ```
 
 ### Builtins
@@ -46,6 +48,7 @@ t.optional(t.string())
 t.transform(t.string())(function(value)
     return tonumber(value)
 end)
+t.default(t.string(), "typed")
 ```
 
 ### Combinators
@@ -102,6 +105,30 @@ schema.parse(123) -- fail (number is not type string)
 ::: caution
 `T` is not checked at runtime due to it being a type-level annotation for what the schema should be inferring to. Keep them the same to avoid type issues.
 :::
+
+## Refine
+
+`t.refine(schema)(refineFn)` allows you to do a custom check during when parsing the schema.
+
+```luau
+const numericString = t.refine(t.string())(function(value, result)
+    if not tonumber(value) then
+        return result.err("not a numeric string")
+    end
+
+    return result.ok()
+end)
+```
+
+## Meta
+
+`t.meta(schema, metadata)` method allows you to wrap around a schema with some metadata attached
+
+```luau
+const metaSchema = t.meta(t.string(), "i heart typed")
+
+print(metaSchema.metadata)
+```
 
 ## Boolean
 
@@ -260,6 +287,17 @@ end)
 
 numericString.parse("42") -- pass, and returns a value with a number type instead of a string type
 numericString.parse(true) -- fails, boolean is not a string
+```
+
+## Default
+
+`t.default(schema, defaultValue)` automatically makes the input schema optional and able to provide a default value if the value being parsed is nil
+
+```luau
+const defaultedSchema = t.default(t.string(), "nuh uh")
+
+defaultedSchema.parse(nil) -- returns "nuh uh"
+defaultedSchema.parse("yuh uh") -- returns "yuh uh"
 ```
 
 ## Union
