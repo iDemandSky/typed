@@ -47,18 +47,6 @@ end
 
 If `rawData` is missing `username`, or `age` is `17`, or `email` doesn't look like an email, `result.ok` is `false` and `result.issues` would tell you exactly what failed instead of letting a bad value get dropped with no information, or even worse, having the bad value slip through into the rest of your program.
 
-## At the Core
-
-typed is made of small set of composable parts.
-
-- **Base schemas** - `t.any`, `t.unknown`, `t.never`, `t.literal`, `t.is`
-- **Builtins** - `t.boolean`, `t.number`, `t.string`, `t.none`, `t.vector`, `t.buffer`, `t.callable`, `t.userdata`
-- **Structures** - `t.table`, `t.array`, `t.iterable`
-- **Modifiers** - `t.optional`, `t.transform`
-- **Combinators** - `t.union`, `t.intersect`
-
-Every single schema -- no matter how it was created -- contains the same set of methods you can call: `validate`, `parse`, `unwrapParse`, and `enforce`.
-
 ## Next Steps
 
 - [Getting Started](./getting-started) - Installing typed into your project, and learn how to build your first schema
