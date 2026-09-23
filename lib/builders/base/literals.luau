@@ -3,12 +3,14 @@ const result = require("../../result")
 const schema = require("../../schema")
 
 const function literalsSchemaBuilder<T>(...: T)
-	local literals = { ... }
+	local literals = table.pack(...)
 
 	return schema.createSchema<<T, nil>>(
 		"literals",
 		function(value)
-			for _, literal in literals do
+			for index = 1, literals.n do
+				local literal = literals[index]
+
 				if value == literal then
 					return result.parse.ok(value :: T)
 				end
