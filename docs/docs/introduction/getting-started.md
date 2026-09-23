@@ -105,17 +105,6 @@ tags; at index 2's value: invalid_type - expected string, got number
 age: invalid_value - expected number at least 18, got 16
 ```
 
-## Methods Overview
-
-typed schemas expose more than `.parse()`. take a look below to see what you need:
-
-| method                | use it when                                                                                                                                                      |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `.validate(value)`    | If you need to do a pass/fail check with issues; you will not get a parsed value back                                                                            |
-| `.parse(value)`       | If you want the validated value back, and putting it through any transformation schemas along the way                                                            |
-| `.unwrapParse(value)` | If you are confident the value is valid, you can get the value back immediately, while having it passed through `.parse()`, but it will error if the parse fails |
-| `.enforce(value)`     | You already have a `T` and want to assert it so it satifies the schema.                                                                                          |
-
-## next steps
+## Next Steps
 
 - [Guide: Writing Schemas](../guide/writing-schemas) - Learn how to write typed schemas
